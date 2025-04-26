@@ -39,7 +39,7 @@ services:
       retries: 12
     volumes:
       - ./migrations/before:/docker-entrypoint-initdb.d
-      - postgres_data:/var/lib/postgresql/data
+      - $WORKDIR/postgres_data:/var/lib/postgresql/data
 
   redis:
     restart: on-failure
@@ -50,6 +50,8 @@ services:
     build:
       context: docker/gotrue
       dockerfile: Dockerfile
+    networks:
+      - $DOCKER_MY_NETWORK
     depends_on:
       postgres:
         condition: service_healthy
@@ -110,6 +112,8 @@ services:
 
   appflowy_cloud:
     restart: on-failure
+    networks:
+      - $DOCKER_MY_NETWORK
     environment:
       - RUST_LOG=${RUST_LOG:-info}
       - APPFLOWY_ENVIRONMENT=production
@@ -154,6 +158,8 @@ services:
 
   admin_frontend:
     restart: on-failure
+    networks:
+      - $DOCKER_MY_NETWORK
     build:
       context: .
       dockerfile: ./admin_frontend/Dockerfile
@@ -221,4 +227,7 @@ volumes:
 
 networks:
   default:
+    driver: bridge
     name: $DOCKER_MY_NETWORK
+  $DOCKER_MY_NETWORK:
+    external: true
