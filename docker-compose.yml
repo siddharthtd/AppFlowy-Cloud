@@ -21,7 +21,7 @@ services:
       - MINIO_ROOT_PASSWORD=${APPFLOWY_S3_SECRET_KEY:-minioadmin}
     command: server /data --console-address ":9001"
     volumes:
-      - minio_data:/data
+      - $WORKDIR/minio_data:/data
 
   postgres:
     restart: on-failure
