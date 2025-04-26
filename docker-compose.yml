@@ -150,8 +150,6 @@ services:
       args:
         FEATURES: ""
     image: appflowyinc/appflowy_cloud:${APPFLOWY_CLOUD_VERSION:-latest}
-    networks:
-      - $DOCKER_MY_NETWORK
     depends_on:
       gotrue:
         condition: service_healthy
