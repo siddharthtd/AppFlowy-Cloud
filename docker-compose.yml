@@ -1,15 +1,15 @@
 # Essential services for AppFlowy Cloud
 
 services:
-  nginx:
-    restart: on-failure
-    image: nginx
-    ports:
-      - ${NGINX_TLS_PORT:-443}:443
-    volumes:
-      - ./nginx:/etc/nginx/conf.d
-      - ./nginx/ssl/certificate.crt:/etc/nginx/ssl/certificate.crt
-      - ./nginx/ssl/private_key.key:/etc/nginx/ssl/private_key.key
+#  nginx:
+#    restart: on-failure
+#    image: nginx
+#    ports:
+#      - ${NGINX_TLS_PORT:-443}:443
+#    volumes:
+#      - ./nginx:/etc/nginx/conf.d
+#      - ./nginx/ssl/certificate.crt:/etc/nginx/ssl/certificate.crt
+#      - ./nginx/ssl/private_key.key:/etc/nginx/ssl/private_key.key
 
   # You do not need this if you have configured to use your own s3 file storage
   minio:
@@ -221,8 +221,5 @@ volumes:
   minio_data:
 
 networks:
-  default:
-    driver: bridge
-    name: $DOCKER_MY_NETWORK
   $DOCKER_MY_NETWORK:
     external: true
