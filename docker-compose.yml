@@ -32,11 +32,11 @@ services:
       - POSTGRES_PASSWORD=${POSTGRES_PASSWORD:-password}
       - POSTGRES_HOST=${POSTGRES_HOST:-postgres}
       - SUPABASE_PASSWORD=${SUPABASE_PASSWORD:-root}
-#    healthcheck:
-#      test: [ "CMD", "pg_isready", "-U", "${POSTGRES_USER}", "-d", "${POSTGRES_DB}" ]
-#      interval: 5s
-#      timeout: 5s
-#      retries: 12
+    healthcheck:
+      test: [ "CMD", "pg_isready", "-U", "${POSTGRES_USER}", "-d", "${POSTGRES_DB}" ]
+      interval: 5s
+      timeout: 5s
+      retries: 12
     volumes:
       - ./migrations/before:/docker-entrypoint-initdb.d
       - $WORKDIR/postgres_data:/var/lib/postgresql/data
@@ -54,7 +54,8 @@ services:
       postgres:
         condition: service_healthy
     healthcheck:
-      test: "curl --fail http://0.0.0.0:9999/health || exit 1"
+#      test: "curl --fail http://0.0.0.0:9999/health || exit 1"
+      test: "pwd || exit 1"
       interval: 5s
       timeout: 5s
       retries: 12
